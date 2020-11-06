@@ -1,116 +1,135 @@
 ---
-layout: post
-title: 综合性项目
-categories: 项目展示
-description: 苏泊尔
-keywords: WiFi
+title: 二. runtime 怎么实现封装 | runtime 的基础数据结构
+key: test
+description: A website with awesome stories.
+excerpt_separator: <!--more-->
+excerpt_type: html # text (default), html
+picture_frame: shadow
+tags: Runtime
 ---
-- 苏泊尔智能厨电IOT项目
-- 伊莱特智能厨电。
+先明白一件事, Runtime 在做什么, 以及都做了哪些达成目的:
+[一. 起源 — runtime 要解决什么 & 为什么这样设计](bear://x-callback-url/open-note?id=0C6CE3AB-C34A-4739-9598-CFED423019D8-6742-00011B35CAC22610&header=%E4%BA%8C.%20%E8%B5%B7%E6%BA%90%20%E2%80%94%20runtime%20%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%20%26%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E6%A0%B7%E8%AE%BE%E8%AE%A1)
+从这里得出, 总共三个点:
+* runtime 在实现**封装**
+* runtime 在实现**消息传递**
+* runtime 在实现消息传递的过程中, 用的是具有**动态性**的方式
+以及一个 OC 的引申:
+* runtime 怎么实现 OC 中 Category, protocol, property 等语言特性
+<!--more-->
+---
+> 目前网上大多数文章, 使用的是已被标记为不可用的 runtime 版本做为讲解  
+> runtime 源码乍一看很难找到入手地方, 里面涉及了不同的宏控制, 同一个结构体多处的定义  
+> 我整理一篇 [其他: Runtime 源码索引](bear://x-callback-url/open-note?id=B3550C45-8F01-4EC0-9821-2C07B25675BB-477-000128BDB612EEEA)正文中都直接给出位置, 不再赘述, 后面直接讲述主体
+
+[image:00AA5BE8-0997-43BB-930B-EB26BA8D8740-26779-000018832E8EECE3/智能截图 14.png]
+![有帮助的截图](/assets/images/aaa.png)
+
+## 源码中基础数据结构
+面向对象最基础的概念: **类**  **对象**
+前面提到过, OC 用的 C/C++ 实现, OC 中的类和对象(不考虑 Category, Property 等情况下).
+<mark>本质就是用两个结构体类型, 创建的几个变量, 并通过负责变量内部字段, 使变量产生 “类”和”对象”的关系</mark>
+我们先看这两个结构体 `struct objc_object `, `struct object_class`
+> ps. <mark>objc_object 不直接等同于 OC 的对象</mark> , <mark>objc_class 不直接等同于 OC 的类</mark>
+
+### 描述类与对象的结构体
+```c++
+struct objc_object {
+private:
+    isa_t isa;
+public: 
+// ...
+// 一系列操作函数
+}
+```
+objc-private.h
+通过源码我们可以看到:
+* objc_object 是只有一个字段 isa 的结构体
+* isa 是个指向某个地址的”指针”(新版中是 `Tagged Pointer`(部分 bit 描述信息, 剩余 bit 存地址), 旧版中就正常指针)
+> isa 具体的实现方式, 我写在这里面 [其他: Tagged Point 与 isa](bear://x-callback-url/open-note?id=DD6BA620-7369-40F2-8076-EEFCFF947C69-477-00005195DB13B02E)
+objc-runtime-new.h
+```c++
+typedef struct objc_class *Class;
+struct objc_class : objc_object {
+    // Class ISA;
+    Class superclass;
+    cache_t cache;             // formerly cache pointer and vtable
+    class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags
+	  // .. 一系列操作函数
+}
+```
+通过源码我们可以看到:
+* objc_class 继承于 objc_object (所以他也有一个 isa 字段)
+* objc_class 有一个自己类型的指针, 名为 `superclass`
+* 剩余 cache 和 bits 字段先不管(这里先着重讨论 类和对象)
+
+## 编译后的 OC 类与对象
+接下来, 我们用 OC 定义一个类(`@interface Test : NSObject`),并提供一些成员变量、成员函数、类函数.用 clang 编译这些 OC 代码, 看最终生成的结果
+`clang -rewrite-objc Test.m -o Test.cpp`
+具体过程见此: [其他: Clang 编译后代码分析](bear://x-callback-url/open-note?id=1125C902-A4C7-4C62-99D8-18E96362C11F-483-0000B1D6DB95754C)
+
+Test.cpp
+这里不再分析过程, 直接上结论一: 对于一个 OC 的类(只有成员变量和函数的基本类,其他协议等以后再谈) `Test`
+* 其内部函数(类函数, 成员函数)都会直接定义成全局静态函数
+* 其他信息用到几个结构体进行描述:
+* `struct Test_IMPL`     : 里面包含其父类的成员变量指针, 自己的成员变量指针, 目前除了计算大小外没看到其他用处
+* `struct _ivar_t`       : 描述成员变量用, 包括位置,大小,名字,类型
+* `struct _ivar_list_t`  : 存放成员变量的集合: 包含`_ivar_t`的大小, `_ivar_t`的总数, `_ivar_t`组成的数组
+* `struct _objc_method`  : 描述函数用(成员及类都是): 包含 SEL, Type Encodings, 函数指针
+(SEL 是什么具体见: [其他: Clang 编译后代码分析](bear://x-callback-url/open-note?id=1125C902-A4C7-4C62-99D8-18E96362C11F-483-0000B1D6DB95754C), Type Encodings 见 [其他: Type Encodings](bear://x-callback-url/open-note?id=3B5FE7A2-609D-44F9-B593-AAD81CB42173-477-00007D9BC42DFA18) )
+* `struct _method_list_t`: 存放函数的集合: 包含 `_objc_method`的大小, 总数, 数组
+* `struct _class_ro_t`   : 存放当前类中,所有自身内部信息用: 包含开始位置,大小,名字, 基础函数`_method_list_t`,协议,变量`_ivar_list_t `,属性
+* `struct _class_t `     : 存放当前类中,自身关系用: 包含 isa, superclass, cache 等
+(isa 是什么具体见: [其他:探究 isa 的指向](bear://x-callback-url/open-note?id=623141C8-F03C-499F-A56E-961B5076B01A-477-00006B5900239E7D) )
+其中: OC 中的一个类 `Test` 会被拆成两部分结构体做描述:
+1. 描述 **对象信息** 的: `struct _class_t OBJC_CLASS_$_Test`: 里面包括成员变量, 成员函数, 及关系等
+2. 描述 **类信息**   的:`struct _class_t OBJC_METACLASS_$_Test`: 里面包括类函数等
+3. 1 中有个 isa 字段指向 2, 最终描述整个类就是一个 `struct _class_t OBJC_CLASS_$_Test`
+
+结论二: 对于任意 OC 的”对象”, 都是 `struct objc_object` 的指针(也在此文中 [其他: Clang 编译后代码分析](bear://x-callback-url/open-note?id=1125C902-A4C7-4C62-99D8-18E96362C11F-483-0000B1D6DB95754C))
+* NSObject, NSObject 子类, NSObject 子类的子类, 本质一样, 都是 `struct objc_object` 的指针
+* “对象” 与自己的”成员变量”,”成员函数”等都没有从属关系 (`objc_object` 里就只有一个isa指针)
+* “对象” 的 “成员变量”, 通过 对象地址 + offset 计算出来, 然后用意取值,修改
+* “对象” 的 “成员函数”, 通过 “消息传递” `objc_msgSend ` 机制找到
+1. 成员提供 “对象”本身 或类函数提供 “类名” 用 `objc_getClass ` 对应的 `struct objc_class *`
+2. 再提供 “函数名” 用`sel_registerName ` 找到 SEL
+3. 最后使用 objc_msgSend 找到对应的函数
+4. “成员函数” 在编译后多出两个入参 “self”, “SEL”.  “成员函数” 内部, 通过 ”self” 调用函数
+
+```objc
+/***
+ * OC 中代码
+ */
+Test *test;
+[test testFunction: 1];
+test->testProperty1 = @(123);
+
+/***
+ * 编译后
+ */
+
+//Test 是 struct objc_object 的别名, 创建一个 struct objc_object 的指针
+typedef struct objc_object Test;  
+Test *test; 
+
+// "对象"函数本身被定义成全局函数, 并直接增加两个入参
+static void _I_Test_testFunction_(Test * self, SEL _cmd, int value) {
+    printf("TestFunction\n %d",((int (*)(id, SEL))(void *)objc_msgSend)((id)(*(NSNumber **)((char *)self + OBJC_IVAR_$_Test$testProperty1)), sel_registerName("intValue")));
+}
+// "对象" 调用函数变成 objc_msgSend, 类函数带入 objc_getClass("Test"), 成员函数 (id)test
+((void (*)(id, SEL, int))(void *)objc_msgSend)((id)test, sel_registerName("testFunction:"), 1);
 
 
-# 苏巧巧
-苏巧巧是[苏泊尔](http://www.supor.com.cn/)公司的智能厨电平台的APP端。APP关联三款苏泊尔智能设备（电饭锅，电压力锅，空气炸锅），在展示菜谱的基础上，可根据菜谱关联的设备自动设置参数，并预约设备进行烹饪。
- 
-APP功能分为三个模块：  
+// "对象" 调用成员变量变成, 直接找到这个变量的地址, 直接做修改
+// 计算成员变量 offset 的代码
+#define __OFFSETOFIVAR__(TYPE, MEMBER) ((long long) &((TYPE *)0)->MEMBER)
+extern "C" unsigned long int OBJC_IVAR_$_Test$testProperty1 __attribute__ ((used, section ("__DATA,__objc_ivar"))) = __OFFSETOFIVAR__(struct Test, testProperty1);
+// 直接通过"对象"地址 + offset 得到"变量"地址, 然后做修改
+(*(NSNumber **)((char *)test + OBJC_IVAR_$_Test$testProperty1)) = ((NSNumber *(*)(Class, SEL, int))(void *)objc_msgSend)(objc_getClass("NSNumber"), sel_registerName("numberWithInt:"), (123));
+```
 
-1. 食谱展示  
-2. 设备控制  
-3. 个人管理  
-  
->AppStore地址: [苏巧巧](https://itunes.apple.com/cn/app/su-qiao-qiao/id1108847591?mt=8)  
-APP-设备通讯: WiFi(机智云定制SDK)  
-项目参与人员: 2人合作   
-项目开发历时：一期开发6个月（15.11~16.05），截止离职前（8月），项目仍在添加功能  
-本人负责内容: APP中除设备控制、系统推送、第三方分享外的其他内容    
-（ps.本人在参与伊莱特项目时负责设备控制模块）
+## 结
+到这里, OC 中的”类”与”对象”概念是怎么用 c/c++ 实现已经明确
+有一点需要注意, 我们在源码中看到的`struct objc_class` 不完全与 `struct _class_t` 等同, 真实的环境中我们可以动态添加函数, 一个类可能有多个 `Category` 包含多组函数. 这些都是在内部过程中进一步整合后归纳到 `struct objc_class` 中的
 
-<br/>
-<br/>
-
-## 食谱模块
-
-<center>
-
-
-<video autoplay="autoplay" height="500" width="280" id="video" controls="" preload="none" poster="{{ site.imageurl }}/su_recipe.png">
-
-<!--<source id="mp4" src="http://github.com/MJXIN/MJXIN.GITHUB.IO/raw/master/RESOURCES/applewatch.mp4" type="video/mp4">-->
-<source id="mp4" src="{{ site.url_SuRecipe }}" type="video/mp4">
-</video>
-</center>  
-
-食谱模块用于展示菜谱，不同菜谱有不同分类并关联不同设备，菜谱可被搜索，收藏，分享；菜谱详情中有用户作品发布及评论模块，并可播放演示视频；横屏时有语音播报当前步骤，并可用语音控制操作。
-演示内容：
-
-1. "吃什么"推荐、"大师菜"、用户个人收藏，分类等不同形式的**食谱列表**；
-2. 食谱列表之后展示的内容是**食谱搜索**，分为搜索前的关键词推荐，搜索中的搜索联想及搜索结果筛选等内容；
-3. 最后演示内容是**食谱详情**，除了菜谱步骤包含较为丰富的界面元素与较复杂的业务逻辑外。还有用户作品处理及评论两块内容。
-（横屏模式，包含语音控制，语音播报功能。由于录制软件横屏失效，未能录制）
-
-> 本人负责此模块所有内容
-
-<br/>
-<br/>
-
-## 个人信息模块
-
-<center><video style="max-width:280px;"  width="100%" id="video" controls="" preload="none" poster="{{ site.imageurl }}/su_Me.png">
-<source id="mp4" src="{{ site.url_SuMe }}" type="video/mp4">
-</video></center>
-
-个人信息模块用于展示及管理个人资料，包含以下内容：
-
-- 个人成长记录（积分系统）展示；商家推广、评论，作品等推送内容；
-- 购物清单管理；
-- 个人资料、个人设备管理；
-- 售后服务及其他；
-
-> 本人负责此模块除设备管理与推送外其他内容
-
-<br/>
-<br/>
-
-## 设备控制模块
-
-<center><video style="max-width:500px;"  width="100%" id="video" controls="" preload="none" poster="{{ site.imageurl }}/su_device.png">
-<source id="mp4" src="{{ site.url_SuDevice }}" type="video/mp4">
-</video></center>
-
-设备控制模块主要负责管理APP与设备之间的通讯  
-
-- 设备控制方面：设置控制参数、发送指令，显示设备上报数据等；
-- 设备管理方面：寻找并配置设备，多种类设备管理等；
-
-<br/>
-视频中演示了设备操作基本流程
-
-1. 选择设备型号并配置设备。  
-2. 打开菜谱使用预定参数（特定菜谱对应特定参数）控制设备。    
-（ps.中间插入了一段菜谱视频播放演示）  
-3. 使用自定义设置（在设备控制界面单独设置时长、米种等参数）控制设备。  
-
-<br/>
-<br/>
-
-# 伊莱特智能厨电系列APP
-<center>
-<img src="{{ site.imageurl }}/e_0.jpg" width="33%" height="33%" />
-<img src="{{ site.imageurl }}/e_1.jpg" width="33%" height="33%" />
-</center>
-
-
-  [伊莱特](http://www.enaiter.com/)系列APP类似苏巧巧，同样是将智能设备（四款电饭锅）依托于菜谱平台。APP中除了菜谱的表现形式及部分业务逻辑不同外，其他功能基本一致。
-
->伊莱特2.0  （2.0是全新App）
-Appstore地址: [伊美味](https://itunes.apple.com/cn/app/yi-mei-wei/id954975977?mt=8)  
-APP-设备通讯: WiFi(机智云定制SDK)  
-项目参与人员: 2人合作   
-项目开发历时：控制模块开发1个月  
-本人负责内容: 设备控制模块
-
-<br/>
-
->伊莱特1.0  
-App名称：妙厨宝（已下架）  
-负责内容: 机智云SDK换代
+剩余的关于 `struct objc_class` 缓存, metchod 查找等在 [三. runtime 的消息机制 & 围绕消息机制设计的数据结构](bear://x-callback-url/open-note?id=D9B0A79C-1AEB-4792-8B54-6FFEA75185B7-477-000082936B957331)中
+剩余的`protocol`, `category` 等内容在 “二.一” 中讲述, 但大同小异, 之后的消息传递过程更为重要

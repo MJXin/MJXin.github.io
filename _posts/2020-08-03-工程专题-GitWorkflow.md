@@ -3,7 +3,8 @@ title: 【负责 APP 组时】Git Workflow 执行方案 (工作流程)
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
-picture_frame: shadow
+lightbox: true
+pageview: true
 tags: 工程专题
 coding: UTF-8
 --- 

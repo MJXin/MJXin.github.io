@@ -3,7 +3,8 @@ title: 附录-CodeReview：(团队共同关注的)代码不符合需求 27 条
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
-picture_frame: shadow
+lightbox: true
+pageview: true
 tags: 工程专题 CodeReview 附录
 coding: UTF-8
 ---

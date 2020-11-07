@@ -3,7 +3,8 @@ title: 附录-OC源码-Block：clang 编译后的的 Block 解析
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
-picture_frame: shadow
+lightbox: true
+pageview: true
 tags: 源码解析 OC基石
 coding: UTF-8
 --- 

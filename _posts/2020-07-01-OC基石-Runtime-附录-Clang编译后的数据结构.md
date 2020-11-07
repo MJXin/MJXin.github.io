@@ -3,7 +3,8 @@ title: 附录-OC源码-Runtime：Clang 编译后的数据结构分析
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
-picture_frame: shadow
+lightbox: true
+pageview: true
 tags: 源码解析 OC基石
 coding: UTF-8
 ---  

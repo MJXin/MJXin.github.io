@@ -3,7 +3,8 @@ title: 附录-CodeReview：(团队共同关注的)信息同步 46 条
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
-picture_frame: shadow
+lightbox: true
+pageview: true
 tags: 工程专题 CodeReview 附录
 coding: UTF-8
 ---

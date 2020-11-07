@@ -3,7 +3,8 @@ title: 附录-CodeReview：(我关注的)逻辑错误代&码使用错误 76 图
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
-picture_frame: shadow
+lightbox: true
+pageview: true
 tags: 工程专题 CodeReview 附录
 coding: UTF-8
 ---

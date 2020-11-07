@@ -3,7 +3,8 @@ title: 【负责 APP 组时】我在 Code Review 中对代码提出的问题
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html
-picture_frame: shadow
+lightbox: true
+pageview: true
 tags: 工程专题 CodeReview
 coding: UTF-8
 ---

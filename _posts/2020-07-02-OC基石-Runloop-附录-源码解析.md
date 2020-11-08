@@ -13,7 +13,7 @@ coding: UTF-8
     
 > 下面的源码解析摘自`CFRunloop.c`, 被我删减了宏过滤掉的部分(大多是系统判断), 并做了格式化    
 > [CFRunloopRun.c](/assets/images/源码解析/runloop/CFRunloopRun.c)    
-> 源码中有部分涉及 `Mach` 这是属于系统内核的调度, 了解的不多, 暂时也不做深入了解 [其他: Mach 是什么](bear://x-callback-url/open-note?id=715FA7E8-B8B5-4FA2-862C-F7F7EED7689F-470-00002563D7DA5446)    
+> 源码中有部分涉及 `Mach` 这是属于系统内核的调度, 了解的不多, 暂时也不做深入了解 [其他: Mach 是什么](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-Mach%E6%98%AF%E4%BB%80%E4%B9%88.html)    
 > 参考文章:    
 > [Run Loops](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html)    
 > [深入理解RunLoop | Garan no dou](https://blog.ibireme.com/2015/05/18/runloop/)    
@@ -100,23 +100,23 @@ if (seconds <= 0.0) { // instant timeout
   
 ## 核心 `do-while`  
 > 我在这里面解读了一些细节函数    
-> [其他: 一些其他函数解析(`CFRunLoopDoObservers`、`__CFRunLoopDoBlocks`)](bear://x-callback-url/open-note?id=460B8C4E-45D7-45E1-ADA1-930BB7AF5D4A-470-00002CE3191B3685)     
+> [其他: 一些其他函数解析(`CFRunLoopDoObservers`、`__CFRunLoopDoBlocks`)](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90.html)     
 > ❓我其实没找到具体休眠的的代码    
   
 前面提过,`格式化文件`中第 42 行和第 158 行是 do-while, `CFRunloopRun` 函数的核心, 这里直接看其内部代码  
 1. **初始化循环条件**: 进入 do-while 前先将 while 的判断条件设为`int32_t retVal = 0;` 默认下一次会继续循环  
 2. ❓执行`__CFRunLoopUnsetIgnoreWakeUps`改了个标志位(暂时不知道干啥)  
-3. **调用监听者**: 通知监听了 `kCFRunLoopBeforeTimers` 的 Observers, 源码解析见: [`CFRunLoopDoObservers`](bear://x-callback-url/open-note?id=460B8C4E-45D7-45E1-ADA1-930BB7AF5D4A-470-00002CE3191B3685)  
-4. **调用监听者**: 通知监听了 `kCFRunLoopBeforeSources` 的 Observers,源码解析见: [`CFRunLoopDoObservers`](bear://x-callback-url/open-note?id=460B8C4E-45D7-45E1-ADA1-930BB7AF5D4A-470-00002CE3191B3685)  
+3. **调用监听者**: 通知监听了 `kCFRunLoopBeforeTimers` 的 Observers, 源码解析见: [`CFRunLoopDoObservers`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90.html)  
+4. **调用监听者**: 通知监听了 `kCFRunLoopBeforeSources` 的 Observers,源码解析见: [`CFRunLoopDoObservers`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90.html)  
 ```objc  
 if (rlm->_observerMask & kCFRunLoopBeforeTimers) __CFRunLoopDoObservers(rl, rlm, kCFRunLoopBeforeTimers);  
 if (rlm->_observerMask & kCFRunLoopBeforeSources) __CFRunLoopDoObservers(rl, rlm, kCFRunLoopBeforeSources);  
 ```  
-5. **执行 block**: 执行 blocks 源码解析见另一篇文章: [`__CFRunLoopDoBlocks`](bear://x-callback-url/open-note?id=460B8C4E-45D7-45E1-ADA1-930BB7AF5D4A-470-00002CE3191B3685)  
+5. **执行 block**: 执行 blocks 源码解析见另一篇文章: [`__CFRunLoopDoBlocks`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90.html)  
 ```objc
 __CFRunLoopDoBlocks(rl, rlm);  
 ```  
-6. **执行 source0**: 判断 source 0, 并执行[`__CFRunLoopDoSources0`](bear://x-callback-url/open-note?id=460B8C4E-45D7-45E1-ADA1-930BB7AF5D4A-470-00002CE3191B3685)  
+6. **执行 source0**: 判断 source 0, 并执行[`__CFRunLoopDoSources0`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90.html)  
 7. **执行 block**: 然后根据情况只要 source0 内部正确执行了,就要再执行一次 block (怀疑是 source 0 有东西加入 block, 但是我在源码中发现; 推测是 source0 中执行的内容, 有可能又调用 `dispatch_async` `dispatch_sync`, 导致有新的 block 加入)  
 ```objc  
 Boolean sourceHandledThisLoop = __CFRunLoopDoSources0(rl, rlm, stopAfterHandle);  
@@ -138,7 +138,7 @@ rl->_sleepTime += (poll ? 0.0 : (CFAbsoluteTimeGetCurrent() - sleepStart));
 __CFRunLoopUnsetSleeping(rl);  
 ```  
 11. ❓`__CFPortSetInsert(dispatchPort, waitSet); `: 没看懂具体做了啥, 我所搜到的实现与 mach 有关,暂时不探究  
-12. **调用监听者**: 通知监听了 `kCFRunLoopAfterWaiting` 的 Observers, 源码解析见另一篇文章: [`CFRunLoopDoObservers`](bear://x-callback-url/open-note?id=460B8C4E-45D7-45E1-ADA1-930BB7AF5D4A-470-00002CE3191B3685)  
+12. **调用监听者**: 通知监听了 `kCFRunLoopAfterWaiting` 的 Observers, 源码解析见另一篇文章: [`CFRunLoopDoObservers`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90.html)  
 13. **执行唤醒的内容**: `CFRUNLOOP_WAKEUP_FOR_NOTHING`,`CFRUNLOOP_WAKEUP_FOR_WAKEUP` 本质都是`do { } while (0)`意思是跑个啥也不干一次循环.  
 这里主要是根据唤醒的东西来执行对应的事情, 下面这两情况都是啥也不干  
 ```objc  

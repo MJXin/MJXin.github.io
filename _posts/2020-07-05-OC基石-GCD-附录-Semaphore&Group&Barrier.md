@@ -11,7 +11,7 @@ coding: UTF-8
 GCD 终于有容易读一点的代码了  
   
 ## `Semaphore`   
-`Semaphore` 的数据结构我记在这一篇 [其他:GCD 的 `数据结构` 源码解析](bear://x-callback-url/open-note?id=217C6952-B9F6-4E2A-95F7-46474B0E6FF7-65647-000146F9FBC68795)  
+`Semaphore` 的数据结构我记在这一篇 [其他:GCD 的 `数据结构` 源码解析](https://mjxin.github.io/2020/07/05/OC%E5%9F%BA%E7%9F%B3-GCD-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html)  
 其中两个字段 `dsema_value`, `dsema_orig` 就是信号量执行的关键  
   
 ### `dispatch_semaphore_create`   
@@ -116,7 +116,7 @@ long dispatch_semaphore_signal(dispatch_semaphore_t dsema){
 ## `dispatch_group`  
 看一些参考资料 `group` 是通过 `semaphore` 实现的, 但是我看的版本不是, `group` 有自己的控制字段  
 ### `dispatch_group_create`:   
-具体数据结构也是在 [其他: 源码中使用的宏](bear://x-callback-url/open-note?id=47C4469A-E3E4-4A81-B258-5E6206F8F857-65647-00016933209B9646) 中,  create 内部是对基础数据结构的初始化  
+具体数据结构也是在 [其他: 源码中使用的宏](https://mjxin.github.io/2020/07/05/OC%E5%9F%BA%E7%9F%B3-GCD-%E9%99%84%E5%BD%95-%E6%BA%90%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AE%8F.html) 中,  create 内部是对基础数据结构的初始化  
 <mark>其中`dg_bits` 在 group 使用中起控制作用的字段</mark>有些参考文章的老代码内部是 semaphore)  
 ```objc  
 dispatch_group_t dispatch_group_create(void) {  
@@ -153,7 +153,7 @@ void dispatch_group_enter(dispatch_group_t dg){
 ```  
 ### `dispatch_group_leave `  
 这一步处理的东西看起来不同, 从`dg_bits` 变成了`dg_state`.   
-实际上联系我们的数据结构部分[其他: 源码中使用的宏](bear://x-callback-url/open-note?id=47C4469A-E3E4-4A81-B258-5E6206F8F857-65647-00016933209B9646)  
+实际上联系我们的数据结构部分[其他: 源码中使用的宏](https://mjxin.github.io/2020/07/05/OC%E5%9F%BA%E7%9F%B3-GCD-%E9%99%84%E5%BD%95-%E6%BA%90%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AE%8F.html)  
 这是个联合体, 和理解为`dg_state` 是由 `dg_bits` 和`dg_gen`组成的  
 这里的 dg_state `+`的操作和上面的`-`互相对应, 只是从字面上转个含义用于后面的对比  
 ```objc  
@@ -195,7 +195,7 @@ void dispatch_group_leave(dispatch_group_t dg){
 ```  
 ### `_dispatch_group_wake`  
 这部分开始就是 group 都执行完, 在调用 notify 的流程  
-显示声明几个变量,联系我们的数据结构[其他: 源码中使用的宏](bear://x-callback-url/open-note?id=47C4469A-E3E4-4A81-B258-5E6206F8F857-65647-00016933209B9646)(里面用到链表节点, 和 group 特有的 notify 节点)  
+显示声明几个变量,联系我们的数据结构[其他: 源码中使用的宏](https://mjxin.github.io/2020/07/05/OC%E5%9F%BA%E7%9F%B3-GCD-%E9%99%84%E5%BD%95-%E6%BA%90%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AE%8F.html)(里面用到链表节点, 和 group 特有的 notify 节点)  
 这里就是将 group 存着的通知链表拿出来. 然后逐个执行  
 ```objc  
 static void _dispatch_group_wake(dispatch_group_t dg, uint64_t dg_state, bool needs_release){  

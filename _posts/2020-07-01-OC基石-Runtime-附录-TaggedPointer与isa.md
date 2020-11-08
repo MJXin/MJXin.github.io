@@ -50,7 +50,7 @@ Tagged pointer 和这个类似, 一个指针假设长度 8 个字节 64 位
   
 直接看源码:  
 <a href='/assets/images/源码解析/runtime/objc-private.h'>objc-private.h</a>  
-(结合 [其他: 探究源码中的宏](bear://x-callback-url/open-note?id=B224D47F-9AAE-4AD2-ACC9-4F5A78CFA357-6742-00018F0BA4161A9C) 找到对应的宏)  
+(结合 [其他: 探究源码中的宏](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-%E6%BA%90%E7%A0%81%E4%B8%AD%E7%9A%84%E5%AE%8F.html) 找到对应的宏)  
 ```objc  
 // 限 64 位, 32 位中是 int  
 typedef unsigned long           uintptr_t;  
@@ -108,7 +108,7 @@ union isa_t {
 **如果要取出 isa 中存放的地址, 可以直接使用 isa & ISA_MASK 操作**  
   
   
-最后, 对 isa 存储的实际探究和实现, 我写在这 [其他:探究 isa 的指向](bear://x-callback-url/open-note?id=623141C8-F03C-499F-A56E-961B5076B01A-477-00006B5900239E7D)  
+最后, 对 isa 存储的实际探究和实现, 我写在这 [其他:探究 isa 的指向](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-%E6%8E%A2%E7%A9%B6-isa-%E7%9A%84%E6%8C%87%E5%90%91.html)  
   
 > 参考文章:    
 > [深入理解Tagged Pointer-InfoQ](https://www.infoq.cn/article/deep-understanding-of-tagged-pointer/)    

@@ -10,8 +10,8 @@ coding: UTF-8
 ---  
 > 使用版本:    
 > <a href='/assets/images/源码解析/GCD/libdispatch-1173.40.5.tar'>libdispatch-1173.40.5.tar</a>    
-> 涉及到的数据结构在我的另一篇 [其他:数据结构源码解析](bear://x-callback-url/open-note?id=217C6952-B9F6-4E2A-95F7-46474B0E6FF7-65647-000146F9FBC68795)    
-> 本篇还是我对函数源码的逐步探究, 核心内容在正文中: [正文: 以 GCD 的接口为引, 看源码实现](bear://x-callback-url/open-note?id=CF0389ED-B080-467E-AAA6-47AD1AEFA8ED-65647-00017C41E41DB85D)    
+> 涉及到的数据结构在我的另一篇 [其他:数据结构源码解析](https://mjxin.github.io/2020/07/05/OC%E5%9F%BA%E7%9F%B3-GCD-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html)    
+> 本篇还是我对函数源码的逐步探究, 核心内容在正文中: [正文: 以 GCD 的接口为引, 看源码实现](https://mjxin.github.io/2020/08/17/OC%E5%9F%BA%E7%9F%B3-GCD-%E6%AD%A3%E6%96%87.html)    
   
   
 ## `dispatch_sync`  
@@ -187,7 +187,7 @@ void _dispatch_main_queue_push(dispatch_queue_main_t dq, dispatch_object_t dou,
 push 到队列后, 之后的调度到了系统底层, 这一层我目前还没追溯. 只能根据参考文章, 找到调用到`_dispatch_worker_thread2` 开始执行流程  
 `_dispatch_worker_thread2` 内部的核心是调用`dispatch_root_queue_drain` 在这里面,正式开始出队操作  
 `_dispatch_root_queue_drain_one` 函数里面是链表的节点操作, 记得数据结构中我们提到GCD 中基本元素都是链表的节点吗?  
-就是在这里使用的 [其他: GCD `数据结构` 源码解析](bear://x-callback-url/open-note?id=217C6952-B9F6-4E2A-95F7-46474B0E6FF7-65647-000146F9FBC68795)  
+就是在这里使用的 [其他: GCD `数据结构` 源码解析](https://mjxin.github.io/2020/07/05/OC%E5%9F%BA%E7%9F%B3-GCD-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html)  
 ```objc  
   while (likely(item = _dispatch_root_queue_drain_one(dq))) {  
     if (reset) _dispatch_wqthread_override_reset();  

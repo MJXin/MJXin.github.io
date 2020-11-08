@@ -106,7 +106,7 @@ static inline void _dispatch_once_gate_broadcast(dispatch_once_gate_t l){
 **无论哪里调用的 dispatch_once, 最终都取出同一个线程**  
 然后用将这个线程 ID 位与 (改变其中一些 bit), 获取当前的状态标记  
 **小知识点: pthread 线程是在 tid 的部分 bit 上记了些状态数据**  
-(参考之前研究的 runtime 源码[Tagged pointer](bear://x-callback-url/open-note?id=DD6BA620-7369-40F2-8076-EEFCFF947C69-477-00005195DB13B02E)类似用法, 部分 bit 用作存 id,部分用于其他标记)  
+(参考之前研究的 runtime 源码[Tagged pointer](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TaggedPointer%E4%B8%8Eisa.html)类似用法, 部分 bit 用作存 id,部分用于其他标记)  
 ```objc  
 // _dispatch_lock_value_for_self 是取 tid, 并位与拿到一个值  
 static inline dispatch_lock _dispatch_lock_value_for_self(void) {  

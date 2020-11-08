@@ -18,7 +18,7 @@ objc_class, objc_object 与 NSObject 的关系, 这反而使我混乱了
   
 `clang -rewrite-objc Test.m -o Test.cpp`  
 <a href='/assets/images/源码解析/runtime//Test.cpp'>Test.cpp</a>  
-[其他: Runtime 源码索引](bear://x-callback-url/open-note?id=B3550C45-8F01-4EC0-9821-2C07B25675BB-477-000128BDB612EEEA)  
+[其他: Runtime 源码索引](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-%E6%BA%90%E7%A0%81%E7%B4%A2%E5%BC%95.html)  
   
 > 备注: 同名的关键字在编译前和编译后不是一个含义, 比如 `NSObject`    
 > 编译后是 `objc_object` 的别名, 这个”单词” 和类本身没关系, 只用于创建结构体指针. 编译前是类名    
@@ -114,7 +114,7 @@ static struct /*_ivar_list_t*/ {
 ### 函数相关结构体  
 * OC 定义在类中的函数, 直接变成了 C 中 <mark>全局静态函数</mark>  
 * 由**函数结构体**: `_objc_method`来描述函数及其信息  
-	* SEL [其他: id,SEL 等关键字及其含义](bear://x-callback-url/open-note?id=BB3D8AF7-2916-4306-963B-F555BC45D9C1-477-00007146039DCDCF), TypeEncodings [其他: Type Encodings](bear://x-callback-url/open-note?id=3B5FE7A2-609D-44F9-B593-AAD81CB42173-477-00007D9BC42DFA18) , 函数指针  
+	* SEL [其他: id,SEL 等关键字及其含义](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-id,sel%E7%AD%89%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%8A%E5%90%AB%E4%B9%89.html), TypeEncodings [其他: Type Encodings](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TypeEncoding.html) , 函数指针  
 * **函数结构体的 集合结构体**: `_method_list_t` 归纳 **函数结构体**  
 	* 里面包含: `_objc_method`单个大小, 数目, `_objc_method` 组成的数组  
 
@@ -211,7 +211,7 @@ struct _class_t {
   * `weakIvarLayout`: 0  
   * `properties `: 属性(之后再谈,先看基础)  
   2. `ClassTest`:  
-  * `isa`: 指向自己的 Meta `MetaClassTest`(关于 isa 的指向见 [其他:探究 isa 的指向](bear://x-callback-url/open-note?id=623141C8-F03C-499F-A56E-961B5076B01A-477-00006B5900239E7D) )  
+  * `isa`: 指向自己的 Meta `MetaClassTest`(关于 isa 的指向见 [其他:探究 isa 的指向](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-%E6%8E%A2%E7%A9%B6-isa-%E7%9A%84%E6%8C%87%E5%90%91.html) )  
   * `superclass`: 指向父类的 Class `Class_NSObject`  
   * `or`: 指向自己的 or `ClassTest_or `  
   

@@ -12,8 +12,8 @@ coding: UTF-8
   
   
 这篇没啥新的点, 主要是对已知的 isa 流程敲些代码做验证   
-isa 具体是啥看这里: [其他: Tagged pointer 与 isa](bear://x-callback-url/open-note?id=DD6BA620-7369-40F2-8076-EEFCFF947C69-477-00005195DB13B02E)  
-isa 做了什么看这里: [三. runtime 的消息机制 - 作为全局查找索引的 `isa`](bear://x-callback-url/open-note?id=D9B0A79C-1AEB-4792-8B54-6FFEA75185B7-477-000082936B957331&header=%E4%BD%9C%E4%B8%BA%E5%85%A8%E5%B1%80%E6%9F%A5%E6%89%BE%E7%B4%A2%E5%BC%95%E7%9A%84%20%60isa%60)  
+isa 具体是啥看这里: [其他: Tagged pointer 与 isa](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TaggedPointer%E4%B8%8Eisa.html)  
+isa 做了什么看这里: [三. runtime 的消息机制 - 作为全局查找索引的 `isa`](https://mjxin.github.io/2020/08/25/OC%E5%9F%BA%E7%9F%B3-Runtime-%E6%AD%A3%E6%96%873.html)  
   
 下面这张图很常了(出自苹果官方文档,但是我回头找不到了)  
 ![](/assets/images/源码解析/runtime/23_7.png)  
@@ -27,9 +27,9 @@ isa 做了什么看这里: [三. runtime 的消息机制 - 作为全局查找索
 * 指针的值\指针指向的地址:   `obj`, `&*obj`  
 * 指针所指向的地址, 所存的值: `*obj`  
 * 结构体的字段, 在其内部是按顺序分配的内存. 在输出结构体值时, 第一个字段如果刚好 8 字节, 其值就存放在**指向结构体**的指针所指向的地址  
-* 我们知道`struct objc_object {isa_t isa}` 只有一个字段, isa, 并且 isa_t 刚好就是 8 个字节 [其他: Tagged pointer 与 isa](bear://x-callback-url/open-note?id=DD6BA620-7369-40F2-8076-EEFCFF947C69-477-00005195DB13B02E)  
-* 所以一个对象 objc, 是一个 `struct objc_object *` ([二. runtime 怎么实现封装](bear://x-callback-url/open-note?id=7907FC5E-D708-4A89-983E-EC60A950B6B7-6742-000174F339AAF0CF)), 其`所指向的地址` 的`前八个字节` 存的就是 `isa`   
-* 其中 llvm 可以利用以下指令查看地址: [其他: 探究源码中的小工具](bear://x-callback-url/open-note?id=FA7D9653-3F13-4D80-8DCC-84478EC3FC99-6742-000197DD1A6F8D44)  
+* 我们知道`struct objc_object {isa_t isa}` 只有一个字段, isa, 并且 isa_t 刚好就是 8 个字节 [其他: Tagged pointer 与 isa](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TaggedPointer%E4%B8%8Eisa.html)  
+* 所以一个对象 objc, 是一个 `struct objc_object *` ([二. runtime 怎么实现封装](https://mjxin.github.io/2020/08/26/OC%E5%9F%BA%E7%9F%B3-Runtime-%E6%AD%A3%E6%96%872.html)), 其`所指向的地址` 的`前八个字节` 存的就是 `isa`   
+* 其中 llvm 可以利用以下指令查看地址: [其他: 探究源码中的小工具]()  
   
 所以我们看下面的源码:  
 ```objc  
@@ -46,7 +46,7 @@ printf("  结论是， obj 第一个字段， 是个指向%p 的指针， 这个
 ## 探究过程  
 ### `class`: `obj.isa` 与 `[objc class]` 都指向其对象的类  
 1. 先打出一个对象指针指向的地址**的值**, 然后再打出 objc.class 指向的地址  
-2. 根据以前了解的 Tagged piointer([其他: Tagged pointer 与 isa](bear://x-callback-url/open-note?id=DD6BA620-7369-40F2-8076-EEFCFF947C69-477-00005195DB13B02E)) 将第一个值 `& ISA_MASK`  
+2. 根据以前了解的 Tagged piointer([其他: Tagged pointer 与 isa](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TaggedPointer%E4%B8%8Eisa.html)) 将第一个值 `& ISA_MASK`  
 3. 得出结论, `obj.isa` 与 `objc.class` 的指向一直  
 ```objc  
 //0x1dffff9730c119  

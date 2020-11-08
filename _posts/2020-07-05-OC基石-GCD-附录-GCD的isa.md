@@ -58,7 +58,7 @@ coding: UTF-8
 * `do_debug`   :print 函数  
 * `do_invoke`  : 调用函数  
   
-其中全局队列`Global`,`Main`的初始化, 都会用到 [`DISPATCH_GLOBAL_OBJECT_HEADER`](bear://x-callback-url/open-note?id=47C4469A-E3E4-4A81-B258-5E6206F8F857-65647-00016933209B9646&header=%60DISPATCH_GLOBAL_OBJECT_HEADER%60%20%E5%9C%A8%20global,%20main%20queue%20%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E5%B8%B8%E8%A7%81)  
+其中全局队列`Global`,`Main`的初始化, 都会用到 [`DISPATCH_GLOBAL_OBJECT_HEADER`](https://mjxin.github.io/2020/07/05/OC%E5%9F%BA%E7%9F%B3-GCD-%E9%99%84%E5%BD%95-%E6%BA%90%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AE%8F.html#dispatch_global_object_header-%E5%9C%A8-global-main-queue-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E5%B8%B8%E8%A7%81)  
   
 ```objc  
 DISPATCH_VTABLE_INSTANCE(semaphore,  

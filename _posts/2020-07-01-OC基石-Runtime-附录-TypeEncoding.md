@@ -12,7 +12,7 @@ coding: UTF-8
 本质上就是一个把返回值, 入参, 入参地址,入参大小. 用缩写, 描述成字符串的实现  
 我们编译一个类的函数后, 会见到  
 <a href='/assets/images/源码解析/runtime/Test.cpp'>Test.cpp</a>  
-具体结构体分析见:  [其他: Clang 编译后的数据结构分析](bear://x-callback-url/open-note?id=1125C902-A4C7-4C62-99D8-18E96362C11F-483-0000B1D6DB95754C)  
+具体结构体分析见:  [其他: Clang 编译后的数据结构分析](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-Clang%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html)  
 
 ```objc  
   

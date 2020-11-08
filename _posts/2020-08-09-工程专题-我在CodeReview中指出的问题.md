@@ -14,12 +14,12 @@ coding: UTF-8
   
 截图约 230 条(在下面链接中), 对涉及其他组员, 代码等不便公开的内容做了裁删打码处理  
 指出的问题, 可归为以下几类:  
-* [代码错误(直接导致程序异常)](bear://x-callback-url/open-note?id=5CE639FA-C275-4EBF-A35A-C14ECB36A801-19321-0000A6610D74C169)  
-* [代码设计能更优化](bear://x-callback-url/open-note?id=DA19BE5F-CE3A-4BA0-80F7-D46CE9359DEE-19321-0000A5FD5B5220DD)  
-* [写法还能再优化](bear://x-callback-url/open-note?id=11068248-06B2-498B-8D24-83611AB24CE9-19321-0000A5C7916C1611)  
-* [兼顾整体团队的代码统一性](bear://x-callback-url/open-note?id=F7F560C9-43CB-4584-88E4-D65206B79C53-19321-0000B2D4C75D4648)  
-* [码不达意](bear://x-callback-url/open-note?id=C1B1312D-1EE7-4BD7-9181-ADA5644885FD-19321-0000A68E71D02C32)  
-* [需求实现错误](bear://x-callback-url/open-note?id=457D05A3-CB95-4D32-BD3E-953B4C079625-19321-0000A704CFC2267D)  
+* [代码错误(直接导致程序异常)](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E9%80%BB%E8%BE%91%E9%94%99%E8%AF%AF.html)  
+* [代码设计能更优化](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96.html)  
+* [写法还能再优化](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E5%86%99%E6%B3%95%E4%BC%98%E5%8C%96.html)  
+* [兼顾整体团队的代码统一性](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E4%BB%A3%E7%A0%81%E7%BB%9F%E4%B8%80%E6%80%A7.html)  
+* [码不达意](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E7%A0%81%E4%B8%8D%E8%BE%BE%E6%84%8F.html)  
+* [需求实现错误](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E9%9C%80%E6%B1%82%E7%BA%A0%E9%94%99.html)  
   
 利用以上数据, 要弄清楚:  
 * 我纠结哪些 “坏” 代码?  
@@ -31,7 +31,7 @@ coding: UTF-8
 
 ### 代码错误(直接导致程序异常):   
 
-[代码错误](bear://x-callback-url/open-note?id=5CE639FA-C275-4EBF-A35A-C14ECB36A801-19321-0000A6610D74C169)   
+[代码错误](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E9%80%BB%E8%BE%91%E9%94%99%E8%AF%AF.html)  
 * 直接的逻辑上错误  
 * 对使用的第三方框架, 函数, 用法等理解不足导致用错的  
 * 对团队的代码, 类, 文件等分工层级理解不足,导致混乱的  
@@ -42,7 +42,7 @@ coding: UTF-8
 
 ### 代码设计能更优化:   
 
-[代码设计优化](bear://x-callback-url/open-note?id=DA19BE5F-CE3A-4BA0-80F7-D46CE9359DEE-19321-0000A5FD5B5220DD)  
+[代码设计优化](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96.html)  
 * 对重复或独立模块未做单独封装  
 * 代码中的实体(类,文件,函数,命名空间等)实现了超出其定义的逻辑 / 影响到不归他管的内容   
 * 实体(类,文件,函数,命名空间等)之间的关系没理清 — 层级混乱, 关系混乱,封装混乱  
@@ -55,7 +55,7 @@ coding: UTF-8
 
 ### 写法还能再优化:   
 
-[写法优化](bear://x-callback-url/open-note?id=11068248-06B2-498B-8D24-83611AB24CE9-19321-0000A5C7916C1611)  
+[写法优化](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E5%86%99%E6%B3%95%E4%BC%98%E5%8C%96.html)  
 * 用官方提倡的方式简化代码  
 * 用 key-value 替代 switch-case  
 * 使用链式调用避免多层嵌套  
@@ -63,7 +63,7 @@ coding: UTF-8
 
 ### 兼顾整体团队的代码统一性:   
 
-[提高代码可维护性, 代码统一性](bear://x-callback-url/open-note?id=F7F560C9-43CB-4584-88E4-D65206B79C53-19321-0000B2D4C75D4648)  
+[提高代码可维护性, 代码统一性](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E4%BB%A3%E7%A0%81%E7%BB%9F%E4%B8%80%E6%80%A7.html)  
 * 代码布局方面(对类内部函数归类, 同类代码写一块)  
 * 命名规范方面(同类型东西,统一命名)  
 * 项目结构方面(各不同模块存放,文件目录)  
@@ -72,12 +72,12 @@ coding: UTF-8
 
 ### 码不达意:   
 
-[码不达意](bear://x-callback-url/open-note?id=C1B1312D-1EE7-4BD7-9181-ADA5644885FD-19321-0000A68E71D02C32)  
+[码不达意](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E7%A0%81%E4%B8%8D%E8%BE%BE%E6%84%8F.html)  
 变量,类,函数等命名和用途对不上  
 
 ### 需求实现错误:   
 
-[需求纠错](bear://x-callback-url/open-note?id=457D05A3-CB95-4D32-BD3E-953B4C079625-19321-0000A704CFC2267D)  
+[需求纠错](https://mjxin.github.io/2020/07/05/%E9%99%84%E5%BD%95_CodeReview_%E9%9C%80%E6%B1%82%E7%BA%A0%E9%94%99.html)  
 代码没能实现需求  
 
 - - - -  

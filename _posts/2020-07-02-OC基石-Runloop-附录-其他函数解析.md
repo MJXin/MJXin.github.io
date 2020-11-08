@@ -75,14 +75,14 @@ CFStringGetTypeID() == CFGetTypeID(curr->_mode)
 
 ```  
   
-ps.我推测其原理类似于之前研究的 runtime 的 isa 技术 [其他: Tagged pointer 与 isa](bear://x-callback-url/open-note?id=DD6BA620-7369-40F2-8076-EEFCFF947C69-477-00005195DB13B02E)  
+ps.我推测其原理类似于之前研究的 runtime 的 isa 技术 [其他: Tagged pointer 与 isa](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TaggedPointer%E4%B8%8Eisa.html)  
   
 ### `__CFRunLoopDoObservers`  
 [CFRunLoop.c](/assets/images/源码解析/runloop/CFRunLoop.c)  
 核心部分是一个: for 循环取出 Observer, 循环中经过一系列操作后执行  
 `__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__`  
   
-这个函数会真正的调用 [`__CFRunLoopObserver`](bear://x-callback-url/open-note?id=8952945C-170E-4D74-A955-C843D3DBF200-19321-00002DEC794F7F79&header=%60CFRunLoopObserverRef%60%20%26%20%60__CFRunLoopObserver%60)中的回调  
+这个函数会真正的调用 [`__CFRunLoopObserver`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html#cfrunloopobserverref--__cfrunloopobserver)中的回调  
   
 1. 先拿 Set 中的 Observers 个数, 然后拿去申请内存, 之后逐个加入数组中(代码有省略)   
 ```objc  
@@ -142,8 +142,8 @@ CF_INLINE void __CFRunLoopObserverSetFiring(CFRunLoopObserverRef rlo) {
 ### `__CFRunLoopDoBlocks`  
 <a href='/assets/images/源码解析/runloop/CFRunLoop.c'>CFRunLoop.c</a>  
 核心逻辑是: while 遍历 block 的链表中取出 block,  然后调用`__CFRUNLOOP_IS_CALLING_OUT_TO_A_BLOCK__`  
-`block` 具体是啥我写在这: [其他: 数据结构源码解析`block`](bear://x-callback-url/open-note?id=8952945C-170E-4D74-A955-C843D3DBF200-19321-00002DEC794F7F79&header=%60_block_item%60:%20%E5%B0%B1%E6%98%AF%E6%88%91%E4%BB%AC%20dispatch%20%E8%BF%9B%E6%9D%A5%E7%9A%84%20%60block%60)  
-`CFRunLoopRef` 具体数据结构:[其他: 数据结构源码解析`CFRunLoopRef`](bear://x-callback-url/open-note?id=8952945C-170E-4D74-A955-C843D3DBF200-19321-00002DEC794F7F79&header=%60_block_item%60:%20%E5%B0%B1%E6%98%AF%E6%88%91%E4%BB%AC%20dispatch%20%E8%BF%9B%E6%9D%A5%E7%9A%84%20%60block%60)  
+`block` 具体是啥我写在这: [其他: 数据结构源码解析`block`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html#%E4%B8%8D%E5%B1%9E%E4%BA%8E-runloop-%E4%B8%89%E5%85%83%E7%B4%A0%E4%BD%86%E8%A2%AB%E7%94%A8%E5%88%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)  
+`CFRunLoopRef` 具体数据结构:[其他: 数据结构源码解析`CFRunLoopRef`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html#cfrunloopref--__cfrunloop)  
   
 可以理解为, 这里就是在处理,我们 `dispatch_async`, `dispatch_sync` 所传入的 block  
   
@@ -166,7 +166,7 @@ struct _block_item *curr = item;
 item = item->_next;  
 ```  
 5. 判断 block 的 mode , **以决定 block 是否需要被执行**  
-* 这里面的判断`CFGetTypeID`, `CFEqual` 等看上面 [很多地方调用的`CFGetTypeID(sources)`是什么](bear://x-callback-url/open-note?id=460B8C4E-45D7-45E1-ADA1-930BB7AF5D4A-470-00002CE3191B3685&header=%E5%BE%88%E5%A4%9A%E5%9C%B0%E6%96%B9%E8%B0%83%E7%94%A8%E7%9A%84%60CFGetTypeID%28sources%29%60%E6%98%AF%E4%BB%80%E4%B9%88)  
+* 这里面的判断`CFGetTypeID`, `CFEqual` 等看上面 [很多地方调用的`CFGetTypeID(sources)`是什么](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90.html#%E5%BE%88%E5%A4%9A%E5%9C%B0%E6%96%B9%E8%B0%83%E7%94%A8%E7%9A%84cfgettypeidsources%E6%98%AF%E4%BB%80%E4%B9%88)  
 * 最终外层判断出来当前 block 的 mode 是单一元素, 还是一个 set  
   * 单个元素执行下面判断:  
     1. block 所属的 mode, 是否等于当前 runloop 的 mode  

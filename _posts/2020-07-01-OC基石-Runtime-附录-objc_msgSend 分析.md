@@ -11,7 +11,7 @@ coding: UTF-8
 > <a href='/assets/images/源码解析/runtime/objc-msg-arm.s'>objc-msg-arm.s</a>  
 <a href='/assets/images/源码解析/runtime/objc-msg-arm64.s'>objc-msg-arm64.s</a>  
 <a href='/assets/images/源码解析/runtime/objc-runtime-new.mm'>objc-runtime-new.mm</a>      
-> [其他: Runtime 源码索引](bear://x-callback-url/open-note?id=B3550C45-8F01-4EC0-9821-2C07B25675BB-477-000128BDB612EEEA)    
+> [其他: Runtime 源码索引](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-%E6%BA%90%E7%A0%81%E7%B4%A2%E5%BC%95.html)    
   
 源码中数据为汇编, 勉强阅读  
 这里以网上其他文章做索引帮助理解  
@@ -22,8 +22,8 @@ coding: UTF-8
 > [Objective-C 消息发送与转发机制原理 | yulingtianxia’s blog](http://yulingtianxia.com/blog/2016/06/15/Objective-C-Message-Sending-and-Forwarding/) (老源码, 需要有**汇编**和**反编译**基础)    
 >     
 > 里面涉及的其他基础概念在我之前的其他文章里:    
-> tagged pointer:  [其他: Tagged pointer 与 isa](bear://x-callback-url/open-note?id=DD6BA620-7369-40F2-8076-EEFCFF947C69-477-00005195DB13B02E)    
-> isa: [其他:探究 isa 的指向](bear://x-callback-url/open-note?id=623141C8-F03C-499F-A56E-961B5076B01A-477-00006B5900239E7D)    
+> tagged pointer:  [其他: Tagged pointer 与 isa](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TaggedPointer%E4%B8%8Eisa.html)    
+> isa: [其他:探究 isa 的指向](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-%E6%8E%A2%E7%A9%B6-isa-%E7%9A%84%E6%8C%87%E5%90%91.html)    
   
 ## 总结  
 objc_msgSend 整体分为三个流程:  
@@ -66,7 +66,7 @@ objc_msgSend 整体分为三个流程:
 ```  
   ldr p13, [x0]   // p13 = isa  
 ```  
-4. 使用 isa 获取 class 地址放到 16: [其他: 源码中 objc_msgSend 分析 - `GetClassFromIsa_p16`](bear://x-callback-url/open-note?id=D8CD1552-D1A3-4A06-945D-862AA56A34D7-477-000083B0800E83B0&header=%60GetClassFromIsa_p16%60)   
+4. 使用 isa 获取 class 地址放到 16: [其他: 源码中 objc_msgSend 分析 - `GetClassFromIsa_p16`](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-objc_msgSend-%E5%88%86%E6%9E%90.html)   
 (isa 除了指针外还有别的数据, 前文提到过的 Tagged Pointer, 这里通过掩码方式直接取出 isa 存的指针)  
 ```  
  GetClassFromIsa_p16 p13   // p16 = class  
@@ -279,12 +279,12 @@ LLookupRecover$1:
   
 * **一些判断状态的准备工作**:  
 	1. 解开 Debug 锁: 源码中看不出干嘛的, 暂时根据名字推测是 debug 用的锁  
-	( [其他: 源码中 objc_msgSend 分析 - `assertUnlocked`](bear://x-callback-url/open-note?id=D8CD1552-D1A3-4A06-945D-862AA56A34D7-477-000083B0800E83B0&header=%60assertUnlocked%60) )  
+	( [其他: 源码中 objc_msgSend 分析 - `assertUnlocked`](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-objc_msgSend-%E5%88%86%E6%9E%90.html#assertunlocked) )  
 ```objc  
 runtimeLock.assertUnlocked();  
 ```  
 	2. 判断是否需要使用缓存(从 `objc_sendMsg` 进来的已经判断过了)  
-走缓存的实际上最后走到 CacheLookup: [其他: 源码中 objc_msgSend 分析 - `_cache_getImp `](bear://x-callback-url/open-note?id=D8CD1552-D1A3-4A06-945D-862AA56A34D7-477-000083B0800E83B0&header=%60_cache_getImp%20%60)  
+走缓存的实际上最后走到 CacheLookup: [其他: 源码中 objc_msgSend 分析 - `_cache_getImp `](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-objc_msgSend-%E5%88%86%E6%9E%90.html#_cache_getimp-)  
 ```objc  
 // Optimistic cache lookup  
 if (fastpath(behavior & LOOKUP_CACHE)) {  
@@ -308,12 +308,12 @@ if (slowpath((behavior & LOOKUP_INITIALIZE) && !cls->isInitialized())) {
   
 * **开始查询 IMP**:   
 外层 for 循环, 内层:  
-	1. 先在 cls 自己的函数表查,调用`getMethodNoSuper_nolock ` 查到的话直接结束  
-	( [其他: 源码中 objc_msgSend 分析 - `getMethodNoSuper_nolock`:查找 cls 中的 Method](bear://x-callback-url/open-note?id=D8CD1552-D1A3-4A06-945D-862AA56A34D7-477-000083B0800E83B0&header=%60getMethodNoSuper_nolock%60:%E6%9F%A5%E6%89%BE%20cls%20%E4%B8%AD%E7%9A%84%20Method) )  
-	2. 然后 `curClass = curClass->superclass` 指向父类, 并且不为空, 继续 3, 否则到 5  
-	3. 调用 `cache_getImp` 在缓存里查, 查到了直接结束, 否则循环到 1  
-	4. 父类都查空,或者别的啥意外, 则到 5  
-	5. imp = forward_imp;(一个用于告知要走消息转发的标记)  
+1. 先在 cls 自己的函数表查,调用`getMethodNoSuper_nolock ` 查到的话直接结束  
+( [其他: 源码中 objc_msgSend 分析 - `getMethodNoSuper_nolock`:查找 cls 中的 Method](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-objc_msgSend-%E5%88%86%E6%9E%90.html#getmethodnosuper_nolock%E5%9C%A8-cls-%E4%B8%AD%E9%81%8D%E5%8E%86-data-%E9%87%8C%E7%9A%84-method_list) )  
+2. 然后 `curClass = curClass->superclass` 指向父类, 并且不为空, 继续 3, 否则到 5  
+3. 调用 `cache_getImp` 在缓存里查, 查到了直接结束, 否则循环到 1  
+4. 父类都查空,或者别的啥意外, 则到 5  
+5. imp = forward_imp;(一个用于告知要走消息转发的标记)  
 注意: 无论如何 imp 都会有值  
 ```objc  
  for (unsigned attempts = unreasonableClassCount();;) {  
@@ -364,7 +364,7 @@ return imp;
 * **若没拿到有效的 IMP, 则走消息转发流程**  
 上一步, 若是找到 IMP 会跳转到 done: 若是最后找不到, 则会出循环, 执行下面的语句  
 因为我有个地方没搞懂, 汇编在调用 `lookupIMPorForward` 时给的 `behavior` 没看懂, 只能根据注释和其他文章说法判断  
-[其他: 源码中 objc_msgSend 分析 - `resolveMethod_locked`: 消息转发流程](bear://x-callback-url/open-note?id=D8CD1552-D1A3-4A06-945D-862AA56A34D7-477-000083B0800E83B0&header=%60resolveMethod_locked%60:%20%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B)  
+[其他: 源码中 objc_msgSend 分析 - `resolveMethod_locked`: 消息转发流程](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-objc_msgSend-%E5%88%86%E6%9E%90.html#getmethodnosuper_nolock%E5%9C%A8-cls-%E4%B8%AD%E9%81%8D%E5%8E%86-data-%E9%87%8C%E7%9A%84-method_list)  
 
 ```objc  
 //objc-msg-arm64.s  

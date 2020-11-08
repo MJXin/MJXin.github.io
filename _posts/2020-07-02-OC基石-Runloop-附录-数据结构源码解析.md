@@ -18,7 +18,7 @@ coding: UTF-8
 下面内容只涉及核心字段, 目的是了解 runloop 数据结构及各结构体之间的关系以及其整体设计思路  
 剩余的很多字段是在 runloop 执行时, 用于记录某些变量用的, 暂时不细究  
   
-[一.runloop 是什么](bear://x-callback-url/open-note?id=2CDADA81-A27A-46BE-B0C7-8BEB68CF0BBC-19321-00002F58CA69FF36) 从这里我们知道, runloop 有四个基本概念 `Thread`, `Runloop`,`Mode`,`Item`  
+[一.runloop 是什么](https://mjxin.github.io/2020/08/20/OC%E5%9F%BA%E7%9F%B3-Runloop-%E6%AD%A3%E6%96%871.html) 从这里我们知道, runloop 有四个基本概念 `Thread`, `Runloop`,`Mode`,`Item`  
 其中后面三个概念属于 Runloop,   
 数据结构关系是:  
 * `Thread` 与 `Runloop` 一对一  
@@ -40,7 +40,7 @@ coding: UTF-8
 * union 是联合体, 理解为下面描述的所有字段都在同一块内存地址, 并且同时只能是其中一个  
 * `version0`: 上面提到的 source 0: 需要手动触发唤醒的事件,  
 * `version1`: 上面提到的 source 1: 由内核触发事件, 基于端口的线程通信, 能主动唤醒 Runloop  
-具体 `source 0` 和 `source 1` 见正文部分 [一.数据结构](bear://x-callback-url/open-note?id=2CDADA81-A27A-46BE-B0C7-8BEB68CF0BBC-19321-00002F58CA69FF36)    
+具体 `source 0` 和 `source 1` 见正文部分 [一.数据结构](https://mjxin.github.io/2020/08/17/OC%E5%9F%BA%E7%9F%B3-GCD-%E6%AD%A3%E6%96%87.html#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)    
 
 ```objc  
 // 省略一部分字段  
@@ -154,10 +154,10 @@ typedef struct __CFRunLoopMode *CFRunLoopModeRef;
 先看 `__CFRunLoopMode` 的核心属性:  
 * mode 名字  
 * _pthread: 对应的线程;  
-* source0: 上面 [`__CFRunLoopSource`](bear://x-callback-url/open-note?id=8952945C-170E-4D74-A955-C843D3DBF200-19321-00002DEC794F7F79&header=%60CFRunLoopSourceRef%60%20%26%20%60__CFRunLoopSource%60),Source 0 的集合  
-* source1: 上面 [`__CFRunLoopSource`](bear://x-callback-url/open-note?id=8952945C-170E-4D74-A955-C843D3DBF200-19321-00002DEC794F7F79&header=%60CFRunLoopSourceRef%60%20%26%20%60__CFRunLoopSource%60),Source 1 的集合  
-* observers: 上面 [`__CFRunLoopObserver`](bear://x-callback-url/open-note?id=8952945C-170E-4D74-A955-C843D3DBF200-19321-00002DEC794F7F79&header=%60CFRunLoopObserverRef%60%20%26%20%60__CFRunLoopObserver%60), observer 的集合  
-* timers: 上面 [`__CFRunLoopTimer`](bear://x-callback-url/open-note?id=8952945C-170E-4D74-A955-C843D3DBF200-19321-00002DEC794F7F79&header=%60CFRunLoopTimerRef%60%20%26%20%60__CFRunLoopTimer%60), Timer 的集合  
+* source0: 上面 [`__CFRunLoopSource`]https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html#cfrunloopsourceref--__cfrunloopsource),Source 0 的集合  
+* source1: 上面 [`__CFRunLoopSource`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html#cfrunloopsourceref--__cfrunloopsource),Source 1 的集合  
+* observers: 上面 [`__CFRunLoopObserver`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html#cfrunloopobserverref--__cfrunloopobserver), observer 的集合  
+* timers: 上面 [`__CFRunLoopTimer`](https://mjxin.github.io/2020/07/02/OC%E5%9F%BA%E7%9F%B3-Runloop-%E9%99%84%E5%BD%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html#cfrunlooptimerref--__cfrunlooptimer), Timer 的集合  
 * _blocks_head: 存储被 `dispatch_sync`,`dispatch_async`到当前 runloop 中的 block(头结点)  
 * _blocks_tail: 存储被 `dispatch_sync`,`dispatch_async`到当前 runloop 中的 block(尾结点)  
 * 上面这两很明显是个链表  

@@ -224,3 +224,28 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+
+# ---------------- #
+#   ResourcesURl   #
+# ---------------- #
+imageNativeUrl: http://github.com/MJXin/MJXin.github.io/raw/master/Resources
+
+resumeNavUrl: http://github.com/MJXin/MJXin.github.io/raw/master/resume
+
+imageurl: http://image-10062009.cos.myqcloud.com
+
+url_SuMe: http://200026064.vod.myqcloud.com/200026064_5aa931e4669211e688ba35b087dab1bb.f0.mp4
+
+url_SuRecipe: http://200026064.vod.myqcloud.com/200026064_a942c900660b11e688ba35b087dab1bb.f0.mp4
+
+url_SuDevice: http://200026064.vod.myqcloud.com/200026064_186b2a4a660a11e687a5dd633e101403.f0.mp4
+
+url_BleHeli: http://200026064.vod.myqcloud.com/200026064_e7b75cd6660711e688ba35b087dab1bb.f0.mp4
+
+url_BleCar: http://200026064.vod.myqcloud.com/200026064_60bcb85e660f11e687a5dd633e101403.f0.mp4
+
+url_VmarkRecipe: http://200026064.vod.myqcloud.com/200026064_9b105b90661011e687a5dd633e101403.f0.mp4
+
+url_VmarkDevice: http://200026064.vod.myqcloud.com/200026064_44fe1e2a660d11e688ba35b087dab1bb.f0.mp4
+
+url_AppleWatch: http://200026064.vod.myqcloud.com/200026064_00998dd4661011e687a5dd633e101403.f0.mp4

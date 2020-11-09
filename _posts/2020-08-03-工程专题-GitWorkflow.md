@@ -1,5 +1,5 @@
 ---
-title: 【负责 APP 组时】Git Workflow 执行方案 (工作流程)
+title: 【工程专题】Git Workflow 执行方案 (工作流程)
 key: test
 excerpt_separator: <!--more-->
 excerpt_type: html # text (default), html

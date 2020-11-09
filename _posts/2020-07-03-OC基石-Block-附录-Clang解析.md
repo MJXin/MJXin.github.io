@@ -21,7 +21,7 @@ xcrun -sdk iphonesimulator clang -rewrite-objc main.m
 文件中一个继承与 NSObject 的类, MYObject 作为外部变量.  
 定义两个 block : `blockWithoutVar` & `blockWithVar`  
 编译后代码看.cpp 文件  
-(runtime 中有相关怎么看的讲解, 这里不深入,直接进入正题 [[其他: Clang 编译后的数据结构分析]] )  
+(runtime 中有相关怎么看的讲解, 这里不深入,直接进入正题 [其他: Clang 编译后的数据结构分析](https://mjxin.github.io/2020/07/03/OC基石-Block-附录-Clang解析.html) )  
   
 ## Block 的基本结构  
 
@@ -179,5 +179,5 @@ static void __main_block_dispose_1(struct __main_block_impl_1*src) {
 }  
 ```  
   
-具体两个函数什么作用, 我放在 [[其他: block 的源码解析]] 看源码时一块看  
-最终结论总结在 [[正文: Block 是什么]]  
+具体两个函数什么作用, 我放在 [其他: block 的源码解析](https://mjxin.github.io/2020/07/03/OC基石-Block-附录-源码解析.html) 看源码时一块看  
+最终结论总结在 [正文: Block 是什么](https://mjxin.github.io/2020/08/15/OC基石-Block-正文.html)  

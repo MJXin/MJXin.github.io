@@ -15,7 +15,7 @@ coding: UTF-8
 isa 具体是啥看这里: [其他: Tagged pointer 与 isa](https://mjxin.github.io/2020/07/01/OC%E5%9F%BA%E7%9F%B3-Runtime-%E9%99%84%E5%BD%95-TaggedPointer%E4%B8%8Eisa.html)  
 isa 做了什么看这里: [三. runtime 的消息机制 - 作为全局查找索引的 `isa`](https://mjxin.github.io/2020/08/25/OC%E5%9F%BA%E7%9F%B3-Runtime-%E6%AD%A3%E6%96%873.html)  
   
-下面这张图很常了(出自苹果官方文档,但是我回头找不到了)  
+下面这张图很常见(出自苹果官方文档)  
 ![](/assets/images/源码解析/runtime/23_7.png)  
   
 这里我用下面的代码, 验证以上的过程:  

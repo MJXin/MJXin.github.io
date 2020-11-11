@@ -16,7 +16,7 @@ coding: UTF-8
 这里共 8 个字节, 通常每个字节都有自己的含义, 比如 0~1 是包头, 2~3 是 checksum, 4~ 是 payload  
   
 Tagged pointer 和这个类似, 一个指针假设长度 8 个字节 64 位  
-以前是 64 位都用来存指针地址, 现在给变成给这 64 位 各自分配不同的含义  
+以前是 32 位都用来存指针地址, 现在有 64 位, 变成给这 64 位 每个部分分配不同的含义,一部分用来存指针  
 以 isa 举例:  
 * 中间固定一段(x86 是 44, arm64是 33(4~38))是存储的地址  
 * 剩余的 bit 描述 `weakly_referenced`,`deallocating`,`extra_rc`这些弱引用,引用计数等信息  
@@ -68,10 +68,10 @@ union isa_t {
 #endif  
 };  
 ```  
-	* `union`: 关键字直接理解就是, isa_t 的值为下面的其中之一(这是块**独立**的内存, 只能是`{}`类含义之一)  
-		* 要么是 Class(`struct objc_class *`)指针  
-		* 要么是 uintptr_t (`unsigned long`)  
-	* ` struct { ISA_BITFIELD}`: 不实际产生作用, 可理解为对 `bits`的注释  
+* `union`: 关键字直接理解就是, isa_t 的值为下面的其中之一(这是块**独立**的内存, 只能是`{}`类含义之一)  
+    * 要么是 Class(`struct objc_class *`)指针  
+    * 要么是 uintptr_t (`unsigned long`)  
+* ` struct { ISA_BITFIELD}`: 不实际产生作用, 可理解为对 `bits`的注释  
   
 下面来看`ISA_BITFIELD` 是如何定义的:  
 <a href='/assets/images/源码解析/runtime/isa.h'>isa.h</a>  

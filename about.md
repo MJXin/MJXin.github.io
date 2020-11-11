@@ -36,7 +36,7 @@ key: page-about
 * &emsp;&nbsp;&nbsp;2020 年: &nbsp;&nbsp;[文件传输协议设计及实现&emsp;&emsp;&nbsp;无 TCP 环境，设计并实现协议保证文件传输  
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;(包含基于遥控器连接飞机的 通信模块 完整实现)](https://mjxin.github.io/2020/10/20/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-USB%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE.html)
 
-* &emsp;&nbsp;&nbsp;18~19年: &nbsp;&nbsp;[APP 整体结构&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;React Component + Container + Redux + Service](https://mjxin.github.io/2020/10/19/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-APP%E7%BB%93%E6%9E%84.html)
+* &emsp;&nbsp;&nbsp;18~19年: &nbsp;&nbsp;[APP 整体结构&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;React Component + Container + Redux + Services](https://mjxin.github.io/2020/10/19/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-APP%E7%BB%93%E6%9E%84.html)
 
 * &emsp;&nbsp;&nbsp;2018 年: &nbsp;&nbsp;[灵活的 Pipeline&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;可随意组装，中断、暂停、重启的 Pipeline 实现 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;(含 TypeScript 代码)](https://mjxin.github.io/2020/10/18/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-%E7%81%B5%E6%B4%BB%E6%8B%BC%E8%A3%85%E7%9A%84-Pipeline.html)
@@ -46,9 +46,9 @@ key: page-about
 
 * 做些项目后: &nbsp;&nbsp;[模块设计的通用范式&emsp;&emsp;&emsp;&emsp; 基础设施 -> 通用功能 -> 业务层 三层结构](https://mjxin.github.io/2020/10/17/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E9%80%9A%E7%94%A8%E8%8C%83%E5%BC%8F.html)
 
-* 刚参加工作: &nbsp;&nbsp;[程序设计基础&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 弄清楚程序的*所有*元素及他们的关系](https://mjxin.github.io/2020/10/15/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-%E7%A8%8B%E5%BA%8F%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%83%E7%B4%A0.html)
+* 刚参加工作: &nbsp;&nbsp;[程序设计基础&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 弄清楚程序的有什么元素及他们的关系](https://mjxin.github.io/2020/10/15/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-%E7%A8%8B%E5%BA%8F%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%83%E7%B4%A0.html)
 
-### OC 源码探究:
+### OC 探究笔记:(每系列 3~10 篇)
 * [Runtime:](https://mjxin.github.io/2020/09/12/%E7%B4%A2%E5%BC%95-OC-%E7%9A%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97.html#runtime-%E7%B3%BB%E5%88%97) 1. [OC 为什么这么实现](https://mjxin.github.io/2020/08/27/OC%E5%9F%BA%E7%9F%B3-Runtime-%E6%AD%A3%E6%96%871.html)&nbsp;&nbsp;2. [数据结构](https://mjxin.github.io/2020/08/26/OC%E5%9F%BA%E7%9F%B3-Runtime-%E6%AD%A3%E6%96%872.html) 3. [核心的 ”消息传递“](https://mjxin.github.io/2020/08/25/OC%E5%9F%BA%E7%9F%B3-Runtime-%E6%AD%A3%E6%96%873.html)
 
 * [Runloop:](https://mjxin.github.io/2020/09/12/%E7%B4%A2%E5%BC%95-OC-%E7%9A%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97.html#runloop-%E7%B3%BB%E5%88%97) 1. [Runloop 基本概述](https://mjxin.github.io/2020/08/20/OC%E5%9F%BA%E7%9F%B3-Runloop-%E6%AD%A3%E6%96%871.html)&emsp;2. [数据结构](https://mjxin.github.io/2020/08/19/OC基石-Runloop-正文2.html)&nbsp;&nbsp;3. [执行流程](https://mjxin.github.io/2020/08/18/OC%E5%9F%BA%E7%9F%B3-Runloop-%E6%AD%A3%E6%96%873.html)  
@@ -62,7 +62,7 @@ key: page-about
 ### 作为 APP 组负责人的经历
 * [我尝试推动的 ”改善整个软件组迭代“ 的方案和过程（完善于与各组负责人，leader，cto，老板的沟通）](https://mjxin.github.io/2020/10/12/%E7%B4%A2%E5%BC%95-%E6%94%B9%E8%BF%9B%E5%85%AC%E5%8F%B8%E8%BD%AF%E4%BB%B6%E7%BB%84%E8%BF%AD%E4%BB%A3%E5%B0%9D%E8%AF%95.html)
 
-* [APP 组中执行并有成效的工作流程 &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp; 将团队问题和代码问题规避在问题发生前](https://mjxin.github.io/2020/08/10/%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98-APP%E7%BB%84%E6%8E%A8%E8%A1%8C%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.html)
+* [APP 组中执行并有成效的工作流程 &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp; 提前规避代码冲突, 分支影响产出, 主线不稳, 功能不全等问题](https://mjxin.github.io/2020/08/10/%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98-APP%E7%BB%84%E6%8E%A8%E8%A1%8C%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.html)
 
 * [我和 APP 组一起执行的 CodeReview &emsp;&emsp;&emsp;&emsp; 总结至今 1000 个 MR，我在 CodeReview 中指出的问题](https://mjxin.github.io/2020/08/08/%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98-CodeReview%E6%88%90%E6%9E%9C%E5%9B%9E%E9%A1%BE.html)
 
@@ -81,44 +81,52 @@ key: page-about
 
 ## 项目经历
 ### 2018.04 ~ 2020.11  [零零无限](https://zerozerorobotics.com)    Hover 2 & V-Coptr 无人机控制端
-在陌生的跨平台领域, 从自学, 到教学, 再到带领新团队实现一款  
-涉及与飞机很多模块都有通信的复杂业务的无人机终端 APP  
-(ControlEngine, CameraServices, MediaServer, FlightControl, Tracker, Gimbal, OA, Captain, AbilitySystem)
+跨平台 RN 领域, 带领新团队, 从零开始实现(自学,在团队中推广及教学)一款  
+涉及与无人机很多模块都有通信的复杂业务的无人机终端 APP  
+(CameraServices, FlightControl, Tracker 等多个飞机模块通信交互)
 
-是负责人,也是主力开发  
+是项目负责人,也是主力开发  
 > 项目总 Commit: 7127, 个人 Commit: 2627  
 > 项目总增量代码: 825049 行, 个人总增量: 257806 行  
 >（截止 2020.10）  
 
    
-#### 技术上负责的部分   
-* 很多**基础设施方案**、**协议制定** 并 **完成底层实现** 
-(如 APP 与飞机通信、业务、[文件传输协议](https://mjxin.github.io/2020/10/20/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-USB%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE.html))
-* 逐渐完善的 APP 整体结构： [React+Redux+Services+Module](https://mjxin.github.io/2020/10/19/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-APP%E7%BB%93%E6%9E%84.html)
-* 利用技术积累提供产品功能方案 (其中 "一键让机头立刻朝向人功能" 公司已申请专利)  
-  将产品的需求拆解成 **飞机各模块需求**, 完成业务划分及协议制定,沟通各组实现
-* 业务支撑模块封装 及 很多的业务开发  
-* 解决被剩下的疑难杂症  
+#### ❙技术上负责的部分   
+* APP 基础设施 **方案\协议的选型和实现**, 包括: 
+  * **协议的选择设计与功能实现:**&nbsp;&nbsp;APP 与飞机 控制、摇杆、图传、USB遥控 等不同"通信协议", 通信及上层功能实现   
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"业务功能协议", ["文件传输协议"](https://mjxin.github.io/2020/10/20/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-USB%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE.html) 等制定和实现
+  * **结构探索并搭建:**&nbsp;&nbsp;[Redux+Services 处理业务的方式](https://mjxin.github.io/2020/10/19/%E8%AE%BE%E8%AE%A1%E4%B8%93%E9%A2%98-APP%E7%BB%93%E6%9E%84.html)
+  * **基础组件:**&nbsp;&nbsp;`带节流多自定接口的按钮`、`带队列有优先级控制的弹窗`、`高频刷新进度条`、`整型浮点滑动条` &nbsp;&nbsp;&nbsp;&nbsp;等
+  * **基础功能:**&nbsp;&nbsp;`文件系统`、`数据库&轻量存储`、`HTTP模板&下载基类封装`、`USB 基类(查询, 下载, 控制)`  &emsp;&nbsp;等
+  * **业务支撑:**&nbsp;&nbsp;`用户服务`、`相机控制(飞机)`、`媒体存储中间层`、`视频自动剪辑中间层`、`MediaPipeline` &nbsp;等
+  * **业务实现:**&nbsp;&nbsp;`遥控模块`、`预览拍摄录像模块`、`用户&用户展示模块`、`全局下载管理`、`设备通信&管理模块`&nbsp;&nbsp;等
 
-#### 组内负责的部分
-* APP **从来没成为** 软件组短板, 基本能最稳定发布版本 (两任 leader 评价均是 "可以完全撒手不管")  
-* 逐步建立了完善的 [工作流程](https://mjxin.github.io/2020/08/12/%E7%B4%A2%E5%BC%95-%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98%E7%B4%A2%E5%BC%95.html),推动并从未中断 [Code Review](https://mjxin.github.io/2020/08/08/%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98-CodeReview%E6%88%90%E6%9E%9C%E5%9B%9E%E9%A1%BE.html)
-* 推动了失败的 [单元测试](https://mjxin.github.io/2020/08/04/%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95.html) (执行 1 年后放弃)和不完全成熟的 **模块化** (没有足够应用场景)   
+* **产品转为技术方案****&nbsp;&nbsp;**&nbsp;&nbsp;(其中 "一键机头朝人"功能 公司已申请专利)  
+  将"V 型轨迹", "半身构图"等功能名词, 转成具有技术可行性的["数学图形", "业务流程","接口", "各模块通信时序图"](https://mjxin.github.io/2020/05/30/%E9%A1%B9%E7%9B%AE%E9%99%84%E5%BD%95-%E6%99%BA%E8%83%BD%E6%A8%A1%E5%BC%8F.html)
 
-#### 软件团队中负责的部分
-* 我参与的多组协作开发功能, 经常由我提供方案/协议, 拆分各模块职责,并推动其他组配合完成. 
-* 早期只专注 APP 组, 19 年起为了效率, 将与 APP 相关的 "设计"、"产品"、"测试" 一块纳入安排
-* [软件组迭代改进方案](https://mjxin.github.io/2020/10/12/%E7%B4%A2%E5%BC%95-%E6%94%B9%E8%BF%9B%E5%85%AC%E5%8F%B8%E8%BD%AF%E4%BB%B6%E7%BB%84%E8%BF%AD%E4%BB%A3%E5%B0%9D%E8%AF%95.html), 通过与软件、预研组领导, 其他软件各组负责人交流, 尝试推动及逐渐完善 
+* **&nbsp;遗留的杂症:**&nbsp;&nbsp;网络导致的飞行卡顿、 Android 数据解析吞包问题、 UI 高频更新卡顿、 RN 滑动冲突 等
+
+#### ❙作为 APP 组责任人部分
+* **保证 APP 稳定发版:**  APP 组 **从未成为** 软件进度短板, 两任 leader 评价均是 "可以完全撒手不管"
+* **提高团队下限:** 约定并严格执行 ["Git Workflow", "Code Review", "合并前测试验收","自动化"等](https://mjxin.github.io/2020/08/12/%E7%B4%A2%E5%BC%95-%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98%E7%B4%A2%E5%BC%95.html)  
+ (规避了大多数 Crash, 代码冲突, 分支策略影响产出, 主线不稳, 功能不全等问题)
+* **关注代码持续:** [单元测试](https://mjxin.github.io/2020/08/04/%E5%B7%A5%E7%A8%8B%E4%B8%93%E9%A2%98-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95.html) & **模块化** (前者执行一年后放弃, 后者没有足够的适用平台)
+
+#### ❙软件团队中参与部分
+* 跨组功能,负责梳理流程、输出方案、协议,拆分到组分配执行(`MediaServer`、`CameraServices`、`校准`、`飞机智能功能`等)
+* 每阶段规划产品节点, 制定验收日期及标准. 为提高效率 将 APP 相关"设计","产品","测试", 均纳入安排
+* 完善, 并推动执行 [软件组迭代改进方案](https://mjxin.github.io/2020/10/12/%E7%B4%A2%E5%BC%95-%E6%94%B9%E8%BF%9B%E5%85%AC%E5%8F%B8%E8%BD%AF%E4%BB%B6%E7%BB%84%E8%BF%AD%E4%BB%A3%E5%B0%9D%E8%AF%95.html)
+
 
 ### 2016.10 ~ 2017.12  [零零无限](https://zerozerorobotics.com)    Hover 无人机控制端
 使用 Swift 完成:
 * 分享模块封装
 * 飞机数据下载 & 相册模块
-  * 线程控制,下载管理
-  * 相册兼顾数据新增/删除,不同态(列表,放大播放中, 编辑裁剪中)的业务管理
-  * 图片&视频编辑(`AVFoundation`, `VideoToolBox` 等, 不包含 `OpenGL` 部分)实现
-* 飞机录像时同步收音及后期降噪
-* 自动将飞机视频裁剪生成小视频功能
+  * 多线程下载控制
+  * 实现并响应式重构,兼顾不同态(列表态,播放旋转浏览态, 编辑裁剪态)下, 数据增删和页面状态控制
+  * 图片 & 视频编辑(`AVFoundation`, `VideoToolbox` 等, 不包含 `OpenGL` 部分)实现
+* APP 收音功能, 收音端 ⇆ 录像端同步问题,  后期降噪
+* APP 自动剪辑生成小视频功能(根据鼓点规则与每帧的评分裁剪拼接)
 
 React Native 调研及对"用户作品展示"模块做跨平台重构
 

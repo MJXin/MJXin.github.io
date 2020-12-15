@@ -27,7 +27,7 @@ key: page-about
 ---
 
 
-`iOS 工程师`&nbsp;`5 年经验`&nbsp;  
+`iOS 工程师`&nbsp;`软件工程专业`&nbsp;`5 年经验`&nbsp;  
 `手机：13697402934`&nbsp;`邮箱：majiaxin_job@163.com`&nbsp;`微信：MJXin_`  
 
 ---
